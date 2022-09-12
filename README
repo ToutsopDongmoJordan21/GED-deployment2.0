@@ -1,0 +1,4 @@
+-- For loading the apps localy, we need to go to the file "application.properties"
+and uncomment the files of mysql" and push into git online.
+-- Then go to the pom.xml file and uncomment the part of the properties of mysql
+and save it.
