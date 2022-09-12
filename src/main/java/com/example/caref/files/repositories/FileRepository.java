@@ -3,6 +3,7 @@ package com.example.caref.files.repositories;
 import com.example.caref.files.entities.CarefFile;
 import com.example.caref.files.entities.enumeration.DocType;
 import com.example.caref.models.Car;
+import com.example.caref.models.Fichier;
 import com.example.caref.models.Garage;
 import com.example.caref.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +17,8 @@ public interface FileRepository extends JpaRepository<CarefFile, Long> {
     List<CarefFile> findByCar(Car car);
 
     List<CarefFile> findByGarage(Garage garage);
+    
+    List<CarefFile> findByFichier(Fichier fichier);
 
     CarefFile findByUserAndType(User user, DocType type);
 

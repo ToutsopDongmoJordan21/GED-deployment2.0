@@ -32,4 +32,5 @@ public class CreateFileDto {
     private Long carId;
     private Long garageId;
     private Long userId;
+    private Long fichierId;
 }

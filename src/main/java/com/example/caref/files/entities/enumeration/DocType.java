@@ -5,7 +5,7 @@ public enum DocType {
     PROFILE_IMAGE(0),
     CAR_IMAGE(1),
     GARAGE_IMAGE(2),
-    OTHER(3);
+    FICHIER(3);
 
     private int value;
 

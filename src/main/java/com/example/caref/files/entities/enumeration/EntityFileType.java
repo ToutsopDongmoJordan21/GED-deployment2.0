@@ -1,10 +1,14 @@
 package com.example.caref.files.entities.enumeration;
 
+import com.example.caref.models.Fichier;
+
 public enum EntityFileType {
 
     CAR(0),
     USER(1),
-    GARAGE(2);
+    GARAGE(2),
+
+    FICHIER(3);
 
     private int value;
 

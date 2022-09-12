@@ -3,6 +3,7 @@ package com.example.caref.files.entities;
 import com.example.caref.files.entities.enumeration.DocType;
 import com.example.caref.files.entities.enumeration.FileType;
 import com.example.caref.models.Car;
+import com.example.caref.models.Fichier;
 import com.example.caref.models.Garage;
 import com.example.caref.models.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -40,6 +41,9 @@ public class CarefFile implements Serializable {
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+    @JsonManagedReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Fichier fichier;
 
     public static final class CarefFileBuilder {
         private Long id;
@@ -51,6 +55,8 @@ public class CarefFile implements Serializable {
         private Car car;
         private Garage garage;
         private User user;
+
+        private Fichier fichier;
 
         private CarefFileBuilder() {
         }
@@ -99,6 +105,11 @@ public class CarefFile implements Serializable {
             return this;
         }
 
+        public CarefFileBuilder withFichier(Fichier fichier) {
+            this.fichier = fichier;
+            return this;
+        }
+
         public CarefFile build() {
             CarefFile carefFile = new CarefFile();
             carefFile.setId(id);
@@ -109,6 +120,7 @@ public class CarefFile implements Serializable {
             carefFile.setCar(car);
             carefFile.setGarage(garage);
             carefFile.setUser(user);
+            carefFile.setFichier(fichier);
             return carefFile;
         }
     }

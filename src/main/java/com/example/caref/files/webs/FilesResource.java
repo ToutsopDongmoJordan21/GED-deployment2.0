@@ -113,6 +113,25 @@ public class FilesResource {
     }
 
     /**
+     * Gets Fichier Images.
+     * @Param fichierId the fichier id
+     * @Param the fichier images
+     */
+
+    @GetMapping("/find/{fichierId}")
+    public ResponseEntity<List<FileDto>> getFichierImages(@PathVariable Long fichierId) {
+        log.info("[API GET] Appel du endpoint getFichierImages");
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(fileService.findFichierFile(fichierId));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(Collections.emptyList());
+        }
+    }
+
+
+    /**
      * Gets garage files.
      *
      * @param garageId the garage id

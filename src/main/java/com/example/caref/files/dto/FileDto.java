@@ -23,6 +23,8 @@ public class FileDto {
 
     private String url;
 
+    private Long fichierId;
+
 
     public static final class FileDtoBuilder {
         private Long id;
@@ -33,6 +35,8 @@ public class FileDto {
         private Long userId;
         private String fileName;
         private String url;
+
+        private Long fichierId;
 
         private FileDtoBuilder() {
         }
@@ -81,6 +85,11 @@ public class FileDto {
             return this;
         }
 
+        public FileDtoBuilder withFichierId(Long fichierId) {
+            this.fichierId = fichierId;
+            return this;
+        }
+
         public FileDto build() {
             FileDto fileDto = new FileDto();
             fileDto.setId(id);
@@ -91,6 +100,7 @@ public class FileDto {
             fileDto.setUserId(userId);
             fileDto.setFileName(fileName);
             fileDto.setUrl(url);
+            fileDto.setFichierId(fichierId);
             return fileDto;
         }
     }

@@ -8,9 +8,11 @@ import com.example.caref.files.repositories.FileRepository;
 import com.example.caref.files.services.FileService;
 import com.example.caref.files.webs.FilesResource;
 import com.example.caref.models.Car;
+import com.example.caref.models.Fichier;
 import com.example.caref.models.Garage;
 import com.example.caref.models.User;
 import com.example.caref.repository.CarRepository;
+import com.example.caref.repository.FichierRepository;
 import com.example.caref.repository.GarageRepository;
 import com.example.caref.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -51,6 +53,9 @@ public class FileServiceImpl implements FileService {
     UserRepository userRepository;
     @Autowired
     GarageRepository garageRepository;
+
+    @Autowired
+    FichierRepository fichierRepository;
     @Autowired
     FileRepository fileRepository;
 
@@ -123,6 +128,22 @@ public class FileServiceImpl implements FileService {
                     carefFile.setUrl(url);
                     fileRepository.save(carefFile);
                 }
+                break;
+                case FICHIER: {
+                    Optional<Fichier> fichier = fichierRepository.findById(dto.getFichierId());
+                    if (fichier.isPresent()) {
+                        filename = "FICHIER_MEDIA_" + dto.getEntity().name() + "_" + fichier.get().getId() + "_" + Calendar.getInstance().getTimeInMillis() + "." + ext;
+                        carefFile.setFichier(fichier.get());
+                    } else {
+                        throw new Exception("FICHIER Element not found with code : " + dto.getFichierId());
+                    }
+                    String url = MvcUriComponentsBuilder
+                            .fromMethodName(FilesResource.class, "getFile", filename).build().toString();
+                    Files.copy(filePart.getInputStream(), this.root.resolve(filename));
+                    carefFile.setFileName(filename);
+                    carefFile.setUrl(url);
+                    fileRepository.save(carefFile);
+                }
             }
         }catch(Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
@@ -180,6 +201,8 @@ public class FileServiceImpl implements FileService {
                     .withCardId(Objects.nonNull(carefFile.getCar()) ? carefFile.getCar().getId() : null)
                     .withUserId(Objects.nonNull(carefFile.getUser()) ? carefFile.getUser().getId() : null)
                     .withGarageCode(Objects.nonNull(carefFile.getGarage()) ? carefFile.getGarage().getId() : null)
+                    .withFichierId(Objects.nonNull(carefFile.getFichier()) ? carefFile.getFichier().getId() : null)
+
                     .build();
         } else {
             return null;
@@ -194,6 +217,11 @@ public class FileServiceImpl implements FileService {
     @Override
     public FileDto findUserFile(Long userId) {
         return buildFileDto(fileRepository.findByUserAndType(userRepository.getOne(userId), DocType.PROFILE_IMAGE));
+    }
+
+    @Override
+    public List<FileDto> findFichierFile(Long fichierId) {
+        return fileRepository.findByFichier(fichierRepository.getOne(fichierId)).stream().map(buildFileDtoCollection()).collect(Collectors.toList());
     }
 
 }

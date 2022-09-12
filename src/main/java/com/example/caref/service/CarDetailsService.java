@@ -149,6 +149,7 @@ public class CarDetailsService {
     }
 
     private Function<Car, CarResponseDto> buildListCarResponseDto() {
+
         return car -> findOneCarById(car.getId());
     }
 

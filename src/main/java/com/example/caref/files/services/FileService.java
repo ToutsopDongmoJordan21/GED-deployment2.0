@@ -23,6 +23,7 @@ public interface FileService {
     public List<FileDto> findCarFile(Long carId);
 
     public List<FileDto> findGarageFile(Long garageId);
+    public List<FileDto> findFichierFile(Long fichierId);
 
     public FileDto findUserFile(Long userId);
 
