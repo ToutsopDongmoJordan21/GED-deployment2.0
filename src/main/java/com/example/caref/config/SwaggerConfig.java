@@ -40,7 +40,7 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2).select()
                 .apis(RequestHandlerSelectors
-                        .basePackage("com.project.caref"))
+                        .basePackage("com.example.caref"))
                 // .paths(PathSelectors.ant("/api/*"))
                 .build().apiInfo(apiInfo()).forCodeGeneration(true)
                 .genericModelSubstitutes(ResponseEntity.class)
